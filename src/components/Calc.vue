@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "Calc",
+  name: "Calc"
 };
 </script>
 

@@ -5,24 +5,24 @@ export default {
     description: {
       required: false,
       default: "",
-      type: String
+      type: String,
     },
     items: {
       required: true,
       default: () => [],
-      type: Array
-    }
+      type: Array,
+    },
   },
   data() {
     return {
-      selectedItemId: this.items[0].id
+      selectedItemId: 0,
     };
   },
   watch: {
     selectedItemId() {
       this.$emit("selection", this.selectedItemId);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -39,7 +39,7 @@ export default {
         {{ item.name }}
       </div>
     </div>
-    <p class="selector-description">lorem ipsum</p>
+    <p class="selector-description">{{ description }}</p>
   </div>
 </template>
 
@@ -54,27 +54,33 @@ export default {
 .selector-items {
   display: flex;
   overflow-x: auto;
-  cursor: pointer;
 }
 
 .selector-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: lightgray;
+  background-color: #eaeaea;
   font-weight: bold;
   border-radius: 10px;
-  padding: 15px 7px;
+  padding: 12px 7px;
   margin-right: 2%;
+  cursor: pointer;
 
   &--selected {
-    background-color: goldenrod;
+    background-color: #daa520;
   }
 }
 
 .selector-description {
   display: flex;
-  color: lightgray;
+  color: #807f92;
   font-style: italic;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-top: 10px;
 }
 </style>

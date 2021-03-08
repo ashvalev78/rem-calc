@@ -77,8 +77,8 @@ export default {
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
-    <div v-else>
-      <h2 class="calc-header">Рассчитать стоимость ремонта с материалами</h2>
+    <div class="calc-wrapper" v-else>
+      <h3 class="calc-header">Рассчитать стоимость ремонта с материалами</h3>
       <ul class="calc-steps-list">
         <li
           v-for="id of data.steps.map((item, id) => id)"
@@ -113,7 +113,7 @@ export default {
         <input class="calc-square-input" v-model="square" />
       </div>
       <div class="calc-height">
-        <span class="calc-height-label">Высота потолков</span>
+        <span class="calc-height-label">Высота потолков, м</span>
         <select class="calc-height-select" v-model="floorHeight">
           <option
             class="calc-height-option"
@@ -123,7 +123,18 @@ export default {
           >
         </select>
       </div>
-      <span>{{ finalCost }}</span>
+      <div class="calc-result">
+        <h3 class="calc-header calc-header-result">
+          Результаты предварительного расчета
+        </h3>
+        <div class="calc-final_cost">
+          <span class="calc-final_cost-label">Итого</span>
+          <span class="calc-final_cost-number"
+            ><span style="font-size: 32px">{{ `${finalCost} ` }}</span
+            >рублей</span
+          >
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -132,10 +143,48 @@ export default {
 .calc-header {
   font-size: 24px;
   font-weight: bold;
+  text-transform: uppercase;
+
+  &-result {
+    margin-top: 24px;
+    text-align: center;
+  }
+}
+
+.calc-result {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.calc-final_cost {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 32px;
+
+  &-label {
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  &-number {
+    font-weight: bold;
+    font-size: 24px;
+  }
+}
+
+.calc-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 .calc-height {
-  padding-left: 103px;
+  padding-left: 210px;
+  margin-top: 20px;
   flex: 1;
   display: flex;
   width: 100%;
@@ -147,13 +196,16 @@ export default {
   }
 
   &-select {
+    padding: 10px 40px;
     border: 1px solid #807f92;
     border-radius: 5px;
+    text-align: center;
+    outline: none;
   }
 }
 
 .calc-square {
-  padding-left: 103px;
+  padding-left: 210px;
   flex: 1;
   display: flex;
   width: 100%;
@@ -170,7 +222,7 @@ export default {
     border-radius: 6px;
     display: flex;
     text-align: center;
-    padding: 10px 20px;
+    padding: 10px 40px;
     max-width: 40px;
   }
 }
@@ -228,6 +280,26 @@ export default {
       padding-top: 20px;
       width: 20%;
     }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .calc-steps-item {
+    flex-flow: column;
+    margin-bottom: 32px;
+
+    &-icon {
+      display: none;
+    }
+
+    &-number {
+      &-wrapper {
+        display: none;
+      }
+    }
+  }
+  .calc-square, .calc-height {
+    padding-left: 0;
   }
 }
 

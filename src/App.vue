@@ -84,12 +84,6 @@ export default {
           v-for="id of data.steps.map((item, id) => id)"
           :key="id"
           class="calc-steps-item"
-          :style="{
-            height: `${120 +
-              (data.steps[id].length > 100
-                ? (data.steps[id].length / 100) * 20
-                : 0)}px`,
-          }"
         >
           <img class="calc-steps-item-icon" :src="data.steps[id].icon_url" />
           <div class="calc-steps-item-number-wrapper">
@@ -257,7 +251,7 @@ export default {
         position: relative;
         padding-top: 15px;
         margin-right: 24px;
-        &::after {
+        /* &::after {
           content: "";
           height: calc(100% - 44px);
           border: 1px dashed #807f92;
@@ -265,7 +259,7 @@ export default {
           top: 42px;
           left: 50%;
           transform: translate(-50%, 0);
-        }
+        } */
       }
     }
 

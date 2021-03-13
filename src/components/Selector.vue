@@ -31,8 +31,8 @@ export default {
     <div class="selector-items">
       <div
         v-for="item of items"
-        class="selector-item"
-        :class="{ 'selector-item--selected': selectedItemId === item.id }"
+        class="button selector-item"
+        :class="{ 'dark selector-item--selected': selectedItemId === item.id }"
         :key="item.id"
         @click="selectedItemId = item.id"
       >
@@ -56,7 +56,7 @@ export default {
   overflow-x: auto;
 }
 
-.selector-item {
+/* .selector-item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,7 +70,7 @@ export default {
   &--selected {
     background-color: #daa520;
   }
-}
+} */
 
 .selector-description {
   display: flex;

@@ -15,9 +15,15 @@ export default {
       floorHeight: null,
     };
   },
+  watch: {
+    square() {
+      if (this.square > 1000) {
+        this.square = 1000;
+      }
+    },
+  },
   computed: {
     finalCost() {
-      console.log(this.square);
       if (this.data) {
         const floorType =
           this.data.floor_types.find(
@@ -33,7 +39,7 @@ export default {
             +floorType.coefficient
           );
         });
-        return stepsSumms.reduce((acc, curVal) => acc + curVal);
+        return Math.floor(stepsSumms.reduce((acc, curVal) => acc + curVal));
       }
       return 0;
     },
@@ -43,8 +49,9 @@ export default {
       this.data.steps[stepId].selectedId = selectionId;
     },
   },
-  async created() {
-    const req = API.getConfig();
+  async mounted() {
+    const APIString = this.$refs.container.parentNode.getAttribute("api");
+    const req = API.getConfig(APIString);
 
     req
       .then((resp) => {
@@ -71,7 +78,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="app-container" ref="container">
     <div v-if="loading">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -85,7 +92,12 @@ export default {
           :key="id"
           class="calc-steps-item"
         >
-          <img class="calc-steps-item-icon" :src="data.steps[id].icon_url" />
+          <img
+            class="calc-steps-item-icon"
+            :src="data.steps[id].icon_url"
+            v-if="data.steps[id].icon_url"
+          />
+          <div class="calc-steps-item-icon" v-else></div>
           <div class="calc-steps-item-number-wrapper">
             <div class="calc-steps-item-number">{{ id + 1 }}</div>
           </div>
@@ -104,7 +116,12 @@ export default {
       </ul>
       <div class="calc-square">
         <span class="calc-square-label">Общая площадь, м^2</span>
-        <input class="calc-square-input" v-model="square" />
+        <input
+          type="number"
+          :min="data.base_square"
+          class="calc-square-input"
+          v-model="square"
+        />
       </div>
       <div class="calc-height">
         <span class="calc-height-label">Высота потолков, м</span>
@@ -282,6 +299,12 @@ export default {
     flex-flow: column;
     margin-bottom: 32px;
 
+    &-name {
+      font-weight: bold;
+      padding-top: 20px;
+      width: 100%;
+    }
+
     &-icon {
       display: none;
     }
@@ -292,7 +315,8 @@ export default {
       }
     }
   }
-  .calc-square, .calc-height {
+  .calc-square,
+  .calc-height {
     padding-left: 0;
   }
 }

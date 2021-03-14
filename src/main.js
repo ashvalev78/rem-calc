@@ -5,4 +5,4 @@ const rootsArray = document.querySelectorAll(".calc-root");
 
 rootsArray.forEach(root => {
   createApp(App).mount(root);
-})
+});
